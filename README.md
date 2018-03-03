@@ -8,7 +8,7 @@
 
 ## 初始项目情况
 
-**后端**：SpringBoot，MyBatis，JSR303
+**后端**：SpringBoot，MyBatis
 
 **前端**：Thymeleaf，Bootstrap，Jquery
 
