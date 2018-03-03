@@ -23,22 +23,21 @@ Java秒杀系统
 
 ## 初始QPS
 
-用一段小代码往数据库里插入了1800条用户信息，并生成相应的用户Token，保存在tokens.txt中。
+用一段代码往数据库里插入了1500条用户信息，并生成相应的用户Token，保存在tokens.txt中。
 
-使用JMeter来进行压力测试
+使用JMeter来进行压力测试，由于我的阿里云服务器配置较低，压测的时候出现很多问题，而且不能测试太多线程。
 
-![](https://github.com/adXiang/miaosha/blob/master/img/miaosha_jmx01.png)
+所以，我就改用我的的Windows电脑进行测试，采用的也是本地MySQL和本地Redis。
 
-![](https://github.com/adXiang/miaosha/blob/master/img/miaosha_jmx02.png)
+QPS：是指每秒内查询次数,比如执行了select操作,相应的qps会增加。QPS = 总请求数 / ( 进程总数 *   请求时间 )
 
-![](https://github.com/adXiang/miaosha/blob/master/img/miaosha_jmx03.png)
+### 测试商品列表
 
-![](https://github.com/adXiang/miaosha/blob/master/img/miaosha_jmx04.png)
+1500个线程*10次，平均QPS = 1076/sec
 
-[miaosha.jmx](https://github.com/adXiang/miaosha/blob/master/other/miaosha.jmx)
+### 测试秒杀接口
 
-[tokens.txt](https://github.com/adXiang/miaosha/blob/master/other/tokens.txt)
+1500个线程*10次，平均QPS = 652/sec
 
-1800个线程*10次
+## 开始优化
 
-QPS = 71.6/sec
