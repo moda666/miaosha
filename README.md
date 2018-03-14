@@ -2,13 +2,13 @@
 
 ![成果展示](https://github.com/adXiang/miaosha/blob/master/img/%E7%A7%92%E6%9D%80%E6%B5%81%E7%A8%8B.gif)
 
-[Java高并发秒杀系统网址](http://miaosha.adxiang.top/)
+项目预览地址：http://miaosha.adxiang.top/
 
 # 初始情况
 
 ## 初始项目情况
 
-**后端**：SpringBoot，MyBatis，JSR303
+**后端**：SpringBoot，MyBatis
 
 **前端**：Thymeleaf，Bootstrap，Jquery
 
