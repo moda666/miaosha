@@ -1,8 +1,8 @@
 # Java高并发秒杀系统
 
-![成果展示](https://github.com/adXiang/miaosha/blob/master/img/%E7%A7%92%E6%9D%80%E6%B5%81%E7%A8%8B.gif)
-
 项目预览地址：http://miaosha.adxiang.top/
+
+![成果展示](https://github.com/adXiang/miaosha/blob/master/img/%E7%A7%92%E6%9D%80%E6%B5%81%E7%A8%8B.gif)
 
 # 初始情况
 
