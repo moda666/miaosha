@@ -52,29 +52,11 @@ QPS：是指每秒内查询次数,比如执行了select操作,相应的qps会增
 
 - ### 页面缓存 + 对象缓存
 
-   （**优化了商品列表页面**）我们访问一个页面的时候不是直接让系统帮我们渲染，而是首先从缓存里面取，如果说找到了，直接返回给客户端，如果说没有，那么我们手动来渲染这个模版，渲染出来后把结果返回给客户端，同时把结果缓存到Redis里面，下次可以直接从这里面取。**更新缓存**：先把数据存到数据库中，成功后，再让缓存失效。
-   
-   ```java
-   //手动渲染
-   SpringWebContext springWebContext = new SpringWebContext(request, response, request.getServletContext(),
-           request.getLocale(), model.asMap(), applicationContext);
-   String html = thymeleafViewResolver.getTemplateEngine().process("goods_list", springWebContext);
-   if (!StringUtils.isEmpty(html)) {
-       redisService.set(GoodsKey.getGoodsList, "", html);
-   }
-   ```
-
 - ### 页面静态化，前后端分离
- 
-   （**优化了商品详情和订单详情页面**）页面都是纯HTML代码，通过JS和Ajax来请求服务端，拉取数据渲染页面，浏览器可以把HTML缓存在客户端，这样页面数据就不用重复下载，只需要下载动态的数据就可以。
 
 - ### 静态资源优化（未实现）
 
-   优化方式：1. JS和CSS压缩，减少流量。2. 多个JS和CSS组合，减少连接数。
-
 - ### CDN优化（未实现）
-
-   CDN即内容分发网络。整个网络上有很多节点，它会把每个数据在每个节点上做一份缓存，如果用户请求的时候，它会根据用户的位置，把请求定位到离用户最近的CDN镜像中，这就导致用户总是访问离自己最近的那个镜像。
    
 ## 解决超卖
 
@@ -90,31 +72,17 @@ QPS：是指每秒内查询次数,比如执行了select操作,相应的qps会增
 
 - ### RabbitMQ队列缓冲，异步下单，增强用户体验
 
-  - 系统初始化时，把商品库存数量加载到Redis。
-  - 收到请求，Redis预减库存，库存不足，直接返回，否则继续。（例如：库存有10个，过来10个请求，把库存减为0，第11个请求过来就不用往下走，直接返回秒杀失败）。 
-  - 如果有库存，请求入队（压入RabbitMQ队列，Direct模式），立即返回排队中
-  - 请求出队，生成订单，减少库存
-  - 客户端轮询，是否秒杀成功
-
 ## 安全优化
 
 - ### 秒杀接口地址隐藏
 
-   当用户第一次点击秒杀的时候，用UUID和MD5随机生成一个字符串，并保存到redis中，秒杀路径中包含这个字符串，每个人的秒杀路径都不一样
-
 - ### 数学公式验证码
 
-   防机器人，削减并发量
-
 - ### 接口防刷
-
-   限制5秒内只能提交验证码5次
 
 ## 其他项目亮点
 
 - ### 使用Redis实现分布式Session
-
-   登录成功后，用UUID给用户生成一个token来标识这个用户，保存到Redis中，写到Cookie，传递给客户端，客户端在随后的访问中都在Cookie中上传这个token，服务端拿到这个token后，就用这个token取到Session信息，我们只要拿到token就可以在Redis中获取对应的用户信息
 
 - ### 明文密码两次MD5
 
